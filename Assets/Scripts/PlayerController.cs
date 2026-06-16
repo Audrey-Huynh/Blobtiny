@@ -13,21 +13,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         hips = GetComponent<Rigidbody>();
-        isGrounded = true; // DELETE when add the following code below to a different script
-        /*
-        public PlayerController playerController;
-
-    private void Start()
-    {
-        playerController = GetGomponent<PlayerController>();
-
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        playerController.isGrounded = true;
-    }
-         */
     }
 
     private void FixedUpdate()
@@ -70,8 +55,8 @@ public class PlayerController : MonoBehaviour
         {
             if (isGrounded)
             {
-                hips.AddForce(new Vector3(0, jumpForce, 0));
-                //isGrounded = false;
+                hips.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+                isGrounded = false;
                 Debug.Log("Jumped!");
             }
         }
