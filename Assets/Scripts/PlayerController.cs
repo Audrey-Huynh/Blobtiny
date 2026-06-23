@@ -10,9 +10,30 @@ public class PlayerController : MonoBehaviour
     public Rigidbody hips;
     public bool isGrounded;
 
+    public Animator anim;
+
+    int heading;
+    int strafe;
+
     void Start()
     {
         hips = GetComponent<Rigidbody>();
+        //anim = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        if (Keyboard.current != null)
+        {
+            heading = (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0) - (Keyboard.current.shiftKey.isPressed ? 3 : 0);
+            strafe = (Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0);
+
+            anim.SetBool("isWalk", heading == 1 || heading == -1);
+            anim.SetBool("isRun", heading <= -2);
+            anim.SetBool("isWalkLeft", strafe == -1);
+            anim.SetBool("isWalkRight", strafe == 1);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -26,28 +47,28 @@ public class PlayerController : MonoBehaviour
         {
             if (Keyboard.current.leftShiftKey.isPressed)
             {
-                hips.AddRelativeForce(forwardDir.normalized * speed * 1.5f, ForceMode.Force); // sprinting
+                hips.AddForce(forwardDir.normalized * speed * 1.5f, ForceMode.Force); // sprinting
 
             }
             else
             {
-                hips.AddRelativeForce(forwardDir.normalized * speed, ForceMode.Force);
+                hips.AddForce(forwardDir.normalized * speed, ForceMode.Force);
             }
         }
 
         if (Keyboard.current.sKey.isPressed) // backward
         {
-            hips.AddRelativeForce(-forwardDir.normalized * speed, ForceMode.Force);
+            hips.AddForce(-forwardDir.normalized * speed, ForceMode.Force);
         }
 
         if (Keyboard.current.aKey.isPressed) // left
         {
-            hips.AddRelativeForce(-rightDir.normalized * strafeSpeed, ForceMode.Force);
+            hips.AddForce(-rightDir.normalized * strafeSpeed, ForceMode.Force);
         }
 
         if (Keyboard.current.dKey.isPressed) // right
         {
-            hips.AddRelativeForce(rightDir.normalized * strafeSpeed, ForceMode.Force);
+            hips.AddForce(rightDir.normalized * strafeSpeed, ForceMode.Force);
         }
 
 
