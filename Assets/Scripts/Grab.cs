@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Grab : MonoBehaviour
 {
-    public Animator animator;
+    /*public Animator animator;
     GameObject grabedObj;
     public Rigidbody rb;
     public int isLeftOrRight;
@@ -60,5 +60,5 @@ public class Grab : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         grabbedObj = null;
-    }
+    }*/
 }
